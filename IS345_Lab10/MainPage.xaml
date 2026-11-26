@@ -16,9 +16,9 @@
                    TextColor="DarkOrange"
                    HorizontalOptions="Center" />
 
-            <Entry x:Name="txt1" Placeholder="Username" />
+            <Entry x:Name="txt1" Placeholder="Enter your username" />
 
-            <Entry x:Name="txt2" Placeholder="Password" IsPassword="True" />
+            <Entry x:Name="txt2" Placeholder="Enter your password" IsPassword="True" />
 
             <Grid ColumnDefinitions="*,*" Margin="0,5,0,0">
                 <Button Grid.Column="0"
