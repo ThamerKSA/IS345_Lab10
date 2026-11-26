@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e) // login button
     {
-        SqlConnection con = new SqlConnection("Data Source=10.0.2.2,1433; Initial Catalog=Lab10DB;Persist Security Info = True;TrustServerCertificate=true; User ID = lab10user; Password = Lab10_HPB9z6n8J0#9");
+        SqlConnection con = new SqlConnection(Db.ConnectionString);
         String sql;
         sql = "SELECT * FROM usertable where username = '" + txt1.Text + "'  and userpass = '" + txt2.Text + "' ";
         SqlCommand comm = new SqlCommand(sql, con);
@@ -40,7 +40,7 @@ public partial class MainPage : ContentPage
             DisplayAlert("Alert", "Please enter a username and password", "OK");
             return;
         }
-        SqlConnection con = new SqlConnection("Data Source=10.0.2.2,1433; Initial Catalog=Lab10DB;Persist Security Info = True;TrustServerCertificate=true; User ID = lab10user; Password = Lab10_HPB9z6n8J0#9");
+        SqlConnection con = new SqlConnection(Db.ConnectionString);
         String sql;
         sql = "SELECT * FROM usertable where username = '" + txt1.Text + "' ";
         SqlCommand comm = new SqlCommand(sql, con);

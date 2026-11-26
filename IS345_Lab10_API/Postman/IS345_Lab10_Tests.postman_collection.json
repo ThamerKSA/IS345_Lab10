@@ -1,0 +1,128 @@
+{
+  "info": {
+    "name": "IS345_Lab10 Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5080" }
+  ],
+  "item": [
+    {
+      "name": "1. Login Page",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/login.html"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login page opens (200)\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Page contains a login form\", () => {",
+              "    pm.expect(pm.response.text()).to.include(\"<form\");",
+              "    pm.expect(pm.response.text()).to.include(\"Login\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Successful Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}"
+        },
+        "url": "{{baseUrl}}/api/Users/login"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login succeeded (200)\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response says Login successful\", () => {",
+              "    const data = pm.response.json();",
+              "    pm.expect(data.message).to.eql(\"Login successful\");",
+              "    pm.expect(data.username).to.eql(\"admin\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Wrong Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"wrong\"\n}"
+        },
+        "url": "{{baseUrl}}/api/Users/login"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Wrong password is rejected (401)\", () => {",
+              "    pm.response.to.have.status(401);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Books by Category",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/Books/category/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"API works (200)\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is a list of books\", () => {",
+              "    const books = pm.response.json();",
+              "    pm.expect(books).to.be.an(\"array\");",
+              "    pm.expect(books.length).to.be.above(0);",
+              "});",
+              "",
+              "pm.test(\"All books are in category 1\", () => {",
+              "    pm.response.json().forEach(book => {",
+              "        pm.expect(book.category).to.eql(1);",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

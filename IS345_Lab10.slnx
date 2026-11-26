@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="IS345_Lab10/IS345_Lab10.csproj" />
+  <Project Path="IS345_Lab10_API/IS345_Lab10_API.csproj" />
 </Solution>

@@ -24,7 +24,7 @@ public partial class Page2 : ContentPage
     }
     private void Button_Clicked_1(object sender, EventArgs e)
     {
-        SqlConnection con = new SqlConnection("Data Source=10.0.2.2,1433; Initial Catalog=Lab10DB;Persist Security Info = True;TrustServerCertificate=true; User ID = lab10user; Password = Lab10_HPB9z6n8J0#9");
+        SqlConnection con = new SqlConnection(Db.ConnectionString);
         string sql = "";
         string custname = Preferences.Get("Name", " "); // login Local Storage - Preferences
         sql = "insert into bookorder (custname,orderdate,total) values ('" + custname + "' , '" + DateTime.Today.ToString("yyyy-MM-dd") + "', '0' )";
